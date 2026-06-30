@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { apiFetch } from '../utils/api';
 import { useApp } from '../context/AppContext';
 import SkeletonCard from '../components/SkeletonCard';
 import { Search, SlidersHorizontal, RefreshCw, Star, ChevronLeft, ChevronRight, X, ArrowUpDown } from 'lucide-react';
@@ -40,7 +41,7 @@ const Shop = ({ filters, setFilters, setSelectedMedicineId, setCurrentPage }) =>
       if (priceMax < 2500) url += `&priceMax=${priceMax}`;
       if (rxToggle) url += `&rxRequired=${rxToggle}`;
 
-      const res = await fetch(url);
+      const res = await apiFetch(url);
       const data = await res.json();
       if (data.success) {
         setMedicines(data.medicines);

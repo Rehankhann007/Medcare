@@ -170,7 +170,7 @@ const AdminDashboard = () => {
         method = 'PUT';
       }
 
-      const res = await fetch(url, {
+      const res = await apiFetch(url, {
         method: method,
         headers: {
           'Content-Type': 'application/json',
