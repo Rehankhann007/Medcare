@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { apiFetch } from '../utils/api';
 import { useApp } from '../context/AppContext';
 import { ShieldAlert, CheckCircle2, AlertTriangle, HelpCircle, Activity } from 'lucide-react';
 
@@ -30,7 +31,7 @@ const DrugInteraction = () => {
     setLoading(true);
     setResult(null);
     try {
-      const res = await fetch(`/api/drug-interactions?med1=${encodeURIComponent(m1)}&med2=${encodeURIComponent(m2)}`);
+      const res = await apiFetch(`/api/drug-interactions?med1=${encodeURIComponent(m1)}&med2=${encodeURIComponent(m2)}`);
       const data = await res.json();
       if (data.success) {
         setResult(data);

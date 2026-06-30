@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { apiFetch } from '../utils/api';
 import { useApp } from '../context/AppContext';
 import { User, ShieldAlert, Users, MapPin, Clock, FileText, Bell, Sparkles, RefreshCw } from 'lucide-react';
 
@@ -44,7 +45,7 @@ const Profile = ({ setCurrentPage, setOrderId }) => {
   const fetchOrders = async () => {
     if (!token) return;
     try {
-      const res = await fetch('/api/orders', {
+      const res = await apiFetch('/api/orders', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await res.json();
@@ -61,7 +62,7 @@ const Profile = ({ setCurrentPage, setOrderId }) => {
   const fetchPrescriptions = async () => {
     if (!token) return;
     try {
-      const res = await fetch('/api/prescriptions', {
+      const res = await apiFetch('/api/prescriptions', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await res.json();
@@ -84,7 +85,7 @@ const Profile = ({ setCurrentPage, setOrderId }) => {
     e.preventDefault();
     setSavingProfile(true);
     try {
-      const res = await fetch('/api/auth/profile', {
+      const res = await apiFetch('/api/auth/profile', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -125,7 +126,7 @@ const Profile = ({ setCurrentPage, setOrderId }) => {
     const updatedFamily = [...(user.familyMembers || []), newMember];
 
     try {
-      const res = await fetch('/api/auth/profile', {
+      const res = await apiFetch('/api/auth/profile', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -148,7 +149,7 @@ const Profile = ({ setCurrentPage, setOrderId }) => {
   const handleDeleteFamilyMember = async (idToDelete) => {
     const updatedFamily = user.familyMembers.filter(m => m._id !== idToDelete);
     try {
-      const res = await fetch('/api/auth/profile', {
+      const res = await apiFetch('/api/auth/profile', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -174,7 +175,7 @@ const Profile = ({ setCurrentPage, setOrderId }) => {
     const updatedAddresses = [...(user.addresses || []), newAddr];
 
     try {
-      const res = await fetch('/api/auth/profile', {
+      const res = await apiFetch('/api/auth/profile', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -199,7 +200,7 @@ const Profile = ({ setCurrentPage, setOrderId }) => {
   const handleDeleteAddress = async (idToDelete) => {
     const updatedAddresses = user.addresses.filter(a => a._id !== idToDelete);
     try {
-      const res = await fetch('/api/auth/profile', {
+      const res = await apiFetch('/api/auth/profile', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

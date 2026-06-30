@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { apiFetch } from '../utils/api';
 import { useApp } from '../context/AppContext';
 import { Star, ShieldAlert, Heart, ShoppingCart, RefreshCw, Send } from 'lucide-react';
 
@@ -17,7 +18,7 @@ const MedicineDetail = ({ medicineId, setSelectedMedicineId, setCurrentPage }) =
   const fetchMedicineDetail = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/medicines/${medicineId}`);
+      const res = await apiFetch(`/api/medicines/${medicineId}`);
       const result = await res.json();
       if (result.success) {
         setData(result);
@@ -50,7 +51,7 @@ const MedicineDetail = ({ medicineId, setSelectedMedicineId, setCurrentPage }) =
 
     setSubmittingReview(true);
     try {
-      const res = await fetch(`/api/medicines/${medicineId}/reviews`, {
+      const res = await apiFetch(`/api/medicines/${medicineId}/reviews`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

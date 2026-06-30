@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { apiFetch } from '../utils/api';
 
 const AppContext = createContext();
 
@@ -40,7 +41,7 @@ export const AppProvider = ({ children }) => {
         return;
       }
       try {
-        const res = await fetch('/api/auth/me', {
+        const res = await apiFetch('/api/auth/me', {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -116,7 +117,7 @@ export const AppProvider = ({ children }) => {
     if (!authToken) return;
     setCartLoading(true);
     try {
-      const res = await fetch('/api/cart', {
+      const res = await apiFetch('/api/cart', {
         headers: { 'Authorization': `Bearer ${authToken}` }
       });
       const data = await res.json();
@@ -137,7 +138,7 @@ export const AppProvider = ({ children }) => {
       return false;
     }
     try {
-      const res = await fetch('/api/cart', {
+      const res = await apiFetch('/api/cart', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -165,7 +166,7 @@ export const AppProvider = ({ children }) => {
   const updateCartQty = async (itemId, qty) => {
     if (!token) return;
     try {
-      const res = await fetch(`/api/cart/${itemId}`, {
+      const res = await apiFetch(`/api/cart/${itemId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -187,7 +188,7 @@ export const AppProvider = ({ children }) => {
   const removeFromCart = async (itemId) => {
     if (!token) return;
     try {
-      const res = await fetch(`/api/cart/${itemId}`, {
+      const res = await apiFetch(`/api/cart/${itemId}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -211,7 +212,7 @@ export const AppProvider = ({ children }) => {
   const fetchReminders = async (authToken = token) => {
     if (!authToken) return;
     try {
-      const res = await fetch('/api/reminders', {
+      const res = await apiFetch('/api/reminders', {
         headers: { 'Authorization': `Bearer ${authToken}` }
       });
       const data = await res.json();
@@ -227,7 +228,7 @@ export const AppProvider = ({ children }) => {
   const saveReminder = async (reminderData) => {
     if (!token) return false;
     try {
-      const res = await fetch('/api/reminders', {
+      const res = await apiFetch('/api/reminders', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -254,7 +255,7 @@ export const AppProvider = ({ children }) => {
   const deleteReminder = async (id) => {
     if (!token) return;
     try {
-      const res = await fetch(`/api/reminders/${id}`, {
+      const res = await apiFetch(`/api/reminders/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { apiFetch } from '../utils/api';
 import { useApp } from '../context/AppContext';
 import { UploadCloud, FileText, CheckCircle, Clock, XCircle, ArrowUpRight, Plus } from 'lucide-react';
 
@@ -17,7 +18,7 @@ const PrescriptionUpload = ({ setCurrentPage }) => {
   const fetchHistory = async () => {
     if (!token) return;
     try {
-      const res = await fetch('/api/prescriptions', {
+      const res = await apiFetch('/api/prescriptions', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await res.json();
@@ -70,7 +71,7 @@ const PrescriptionUpload = ({ setCurrentPage }) => {
     formData.append('notes', notes);
 
     try {
-      const res = await fetch('/api/prescriptions', {
+      const res = await apiFetch('/api/prescriptions', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`

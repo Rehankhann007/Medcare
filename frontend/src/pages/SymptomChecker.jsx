@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { apiFetch } from '../utils/api';
 import { useApp } from '../context/AppContext';
 import { HelpCircle, Check, RefreshCw, ShoppingCart } from 'lucide-react';
 
@@ -43,7 +44,7 @@ const SymptomChecker = ({ setSelectedMedicineId, setCurrentPage }) => {
 
     setLoading(true);
     try {
-      const res = await fetch('/api/symptom-checker', {
+      const res = await apiFetch('/api/symptom-checker', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ symptoms: selectedSymptoms })

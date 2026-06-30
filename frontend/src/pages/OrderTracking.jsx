@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { apiFetch } from '../utils/api';
 import { useApp } from '../context/AppContext';
 import { Search, MapPin, Truck, CheckCircle2, Circle, Clock, Info } from 'lucide-react';
 
@@ -12,7 +13,7 @@ const OrderTracking = ({ orderId, setOrderId }) => {
     if (!idToSearch) return;
     setLoading(true);
     try {
-      const res = await fetch(`/api/orders/${idToSearch}`, {
+      const res = await apiFetch(`/api/orders/${idToSearch}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await res.json();

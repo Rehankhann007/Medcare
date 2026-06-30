@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { apiFetch } from '../utils/api';
 import { useApp } from '../context/AppContext';
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
 import { LayoutDashboard, ShoppingBag, Plus, Trash2, Edit, Check, X, FileText, AlertTriangle, Users, DollarSign, Activity, ArrowUpRight, ArrowDownRight } from 'lucide-react';
@@ -47,7 +48,7 @@ const AdminDashboard = () => {
   const fetchDashboard = async () => {
     setLoadingDashboard(true);
     try {
-      const res = await fetch('/api/admin/dashboard', {
+      const res = await apiFetch('/api/admin/dashboard', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await res.json();
@@ -64,7 +65,7 @@ const AdminDashboard = () => {
   const fetchMedicines = async () => {
     setLoadingMeds(true);
     try {
-      const res = await fetch('/api/medicines?limit=100'); // Load all
+      const res = await apiFetch('/api/medicines?limit=100'); // Load all
       const data = await res.json();
       if (data.success) {
         setMedicines(data.medicines);
@@ -79,7 +80,7 @@ const AdminDashboard = () => {
   const fetchOrders = async () => {
     setLoadingOrders(true);
     try {
-      const res = await fetch('/api/admin/orders', {
+      const res = await apiFetch('/api/admin/orders', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await res.json();
@@ -96,7 +97,7 @@ const AdminDashboard = () => {
   const fetchPrescriptions = async () => {
     setLoadingPrescriptions(true);
     try {
-      const res = await fetch('/api/admin/prescriptions', {
+      const res = await apiFetch('/api/admin/prescriptions', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await res.json();
@@ -113,7 +114,7 @@ const AdminDashboard = () => {
   const fetchUsers = async () => {
     setLoadingUsers(true);
     try {
-      const res = await fetch('/api/admin/users', {
+      const res = await apiFetch('/api/admin/users', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await res.json();
@@ -209,7 +210,7 @@ const AdminDashboard = () => {
   const handleDeleteMedicine = async (id) => {
     if (!window.confirm('Are you sure you want to delete this medicine?')) return;
     try {
-      const res = await fetch(`/api/admin/medicines/${id}`, {
+      const res = await apiFetch(`/api/admin/medicines/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -241,7 +242,7 @@ const AdminDashboard = () => {
   // Update order status dropdown
   const handleUpdateOrderStatus = async (orderId, status) => {
     try {
-      const res = await fetch(`/api/admin/orders/${orderId}`, {
+      const res = await apiFetch(`/api/admin/orders/${orderId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -262,7 +263,7 @@ const AdminDashboard = () => {
   // Prescription approvals queue
   const handlePrescriptionApproval = async (rxId, status) => {
     try {
-      const res = await fetch(`/api/admin/prescriptions/${rxId}`, {
+      const res = await apiFetch(`/api/admin/prescriptions/${rxId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

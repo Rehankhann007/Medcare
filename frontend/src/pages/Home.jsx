@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { apiFetch } from '../utils/api';
 import { useApp } from '../context/AppContext';
 import {
   Search, ShoppingBag, ShieldCheck, Award, HeartHandshake,
@@ -169,7 +170,7 @@ const Home = ({ setCurrentPage, setShopFilters, setSelectedMedicineId }) => {
   useEffect(() => {
     const fetchPopular = async () => {
       try {
-        const res = await fetch('/api/medicines?limit=8&sort=newest');
+        const res = await apiFetch('/api/medicines?limit=8&sort=newest');
         const data = await res.json();
         if (data.success) setPopularMedicines(data.medicines);
       } catch (err) {

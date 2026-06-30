@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { apiFetch } from '../utils/api';
 import { useApp } from '../context/AppContext';
 import { ShieldCheck, FileText, UploadCloud, RefreshCw, CreditCard, Landmark, CheckCircle } from 'lucide-react';
 
@@ -115,7 +116,7 @@ const Checkout = ({ details, setOrderId, setCurrentPage }) => {
         formData.append('doctorName', doctorName || 'Self/Unknown');
 
         try {
-          const rxRes = await fetch('/api/prescriptions', {
+          const rxRes = await apiFetch('/api/prescriptions', {
             method: 'POST',
             headers: { 'Authorization': `Bearer ${token}` },
             body: formData
@@ -153,7 +154,7 @@ const Checkout = ({ details, setOrderId, setCurrentPage }) => {
         prescriptionId: finalPrescriptionId
       };
 
-      const res = await fetch('/api/orders', {
+      const res = await apiFetch('/api/orders', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -167,7 +168,7 @@ const Checkout = ({ details, setOrderId, setCurrentPage }) => {
         if (addressIndex === 'new') {
           const updatedAddresses = [...savedAddresses, shippingAddress];
           try {
-            await fetch('/api/auth/profile', {
+            await apiFetch('/api/auth/profile', {
               method: 'PUT',
               headers: {
                 'Content-Type': 'application/json',
@@ -176,7 +177,7 @@ const Checkout = ({ details, setOrderId, setCurrentPage }) => {
               body: JSON.stringify({ addresses: updatedAddresses })
             });
             // Update context state
-            const meRes = await fetch('/api/auth/me', { headers: { 'Authorization': `Bearer ${token}` } });
+            const meRes = await apiFetch('/api/auth/me', { headers: { 'Authorization': `Bearer ${token}` } });
             const meData = await meRes.json();
             if (meData.success) updateLocalUser(meData.user);
           } catch (addrErr) {

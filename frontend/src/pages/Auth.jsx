@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { apiFetch } from '../utils/api';
 import { useApp } from '../context/AppContext';
 import {
   Mail, ShieldCheck, MailQuestion, ArrowLeft, LogIn, Eye, EyeOff, User, Lock
@@ -90,7 +91,7 @@ const Auth = ({ setCurrentPage }) => {
 
     setLoading(true);
     try {
-      const res = await fetch('/api/auth/send-otp', {
+      const res = await apiFetch('/api/auth/send-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: regEmail, name: regName })
@@ -121,7 +122,7 @@ const Auth = ({ setCurrentPage }) => {
 
     setLoading(true);
     try {
-      const res = await fetch('/api/auth/register', {
+      const res = await apiFetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -155,7 +156,7 @@ const Auth = ({ setCurrentPage }) => {
     }
     setLoading(true);
     try {
-      const res = await fetch('/api/auth/login', {
+      const res = await apiFetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ identifier: loginIdentifier, password: loginPassword })
@@ -183,7 +184,7 @@ const Auth = ({ setCurrentPage }) => {
   const sendGoogleCredentialToBackend = async (credential) => {
     setLoading(true);
     try {
-      const res = await fetch('/api/auth/google', {
+      const res = await apiFetch('/api/auth/google', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ credential })
@@ -254,7 +255,7 @@ useEffect(() => {
     setLoading(true);
     try {
       const seedEmail = loginIdentifier || regEmail || 'googleuser@gmail.com';
-      const res = await fetch('/api/auth/google', {
+      const res = await apiFetch('/api/auth/google', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
